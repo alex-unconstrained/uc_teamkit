@@ -7,28 +7,37 @@ const CONNECTIONS = [
   { title: 'Google Calendar — check your schedule, find conflicts', value: 'Google Calendar' },
   { title: 'Notion — search and create workspace pages', value: 'Notion' },
   { title: 'Microsoft 365 / Outlook — work email access', value: 'Microsoft 365' },
-  { title: 'Skip for now', value: 'skip' },
 ];
+
+const onCancel = () => process.exit(0);
 
 export async function runConnectionsSetup() {
   section('Step 4: Connect More Tools (Optional)');
   console.log('These are optional — you can always add them later.');
+  console.log('');
+
+  const { wantConnections } = await prompts({
+    type: 'confirm',
+    name: 'wantConnections',
+    message: 'Want to connect any additional tools now?',
+    initial: true,
+  }, { onCancel });
+
+  if (!wantConnections) {
+    info('Skipping. You can add them anytime with: npm run setup');
+    return { connections: [] };
+  }
 
   const { selected } = await prompts({
     type: 'multiselect',
     name: 'selected',
-    message: 'Which tools do you want to connect?',
+    message: 'Which tools? (Space to select, Enter to confirm)',
     choices: CONNECTIONS,
-    hint: '- Space to select, Enter to confirm',
-  });
+    hint: 'Space to select',
+  }, { onCancel });
 
-  // Cancelled (Ctrl+C) or skip or nothing chosen
-  if (
-    !selected ||
-    selected.length === 0 ||
-    selected.includes('skip')
-  ) {
-    info('Skipping...');
+  if (!selected || selected.length === 0) {
+    info('None selected. You can add them later.');
     return { connections: [] };
   }
 

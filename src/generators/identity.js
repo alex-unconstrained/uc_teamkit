@@ -46,9 +46,15 @@ export function generateIdentityMd(answers) {
     return `- [${checked}] ${item}`;
   }).join('\n');
 
-  const focusList = helpWith.length > 0
+  const ucFocusList = ucFocus.length > 0
+    ? ucFocus.map((item) => `- ${item}`).join('\n')
+    : '';
+
+  const helpList = helpWith.length > 0
     ? helpWith.map((item) => `- ${item}`).join('\n')
-    : '- (no focus areas selected)';
+    : '';
+
+  const focusList = [ucFocusList, helpList].filter(Boolean).join('\n') || '- (no focus areas selected)';
 
   const quirksList = quirks.filter(Boolean).length > 0
     ? quirks.filter(Boolean).map((q) => `- ${q}`).join('\n')

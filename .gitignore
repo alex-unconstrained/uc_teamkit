@@ -9,3 +9,4 @@ node_modules/
 .setup-state.json
 start.sh
 org-context.md
+.claude/memory/

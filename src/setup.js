@@ -7,6 +7,8 @@ import { runTelegramSetup } from "./stages/telegram.js";
 import { runConnectionsSetup } from "./stages/connections.js";
 import { runContextGathering, firstLaunch } from "./stages/context.js";
 
+const onCancel = () => process.exit(0);
+
 async function main() {
   const projectDir = process.cwd();
   const identityPath = path.join(projectDir, "my-identity.md");
@@ -32,7 +34,7 @@ async function main() {
         { title: "Keep personality, reconfigure connections", value: "connections" },
         { title: "Keep everything, just relaunch", value: "launch" },
       ],
-    });
+    }, { onCancel });
 
     if (action === "launch") {
       await firstLaunch();
@@ -59,7 +61,7 @@ async function main() {
     name: "approve",
     message: "Look good? (You can always edit the files later)",
     initial: true,
-  });
+  }, { onCancel });
 
   if (!approve) {
     console.log("Run npm run setup again to start over.");
@@ -72,7 +74,12 @@ async function main() {
   success("Saved my-identity.md and my-soul.md");
 
   // Stage 3: Telegram
-  await runTelegramSetup();
+  const telegram = await runTelegramSetup();
+  if (!telegram.success) {
+    console.log("");
+    info("Telegram isn't fully set up yet — you can finish later with: npm run setup");
+    console.log("");
+  }
 
   // Stage 4: Optional connections
   const { connections } = await runConnectionsSetup();

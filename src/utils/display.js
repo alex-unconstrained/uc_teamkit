@@ -14,6 +14,14 @@ export function banner() {
   console.log(ORANGE('│') + '  Let\'s build your personal assistant.   ' + ORANGE('│'));
   console.log(ORANGE('└─────────────────────────────────────────┘'));
   console.log('');
+  console.log(DIM('This will take about 10-15 minutes. We\'ll:'));
+  console.log(DIM('  1. Design your assistant\'s personality'));
+  console.log(DIM('  2. Connect it to Telegram'));
+  console.log(DIM('  3. Optionally connect email, calendar, and more'));
+  console.log(DIM('  4. Launch your assistant'));
+  console.log('');
+  console.log(DIM('You can rerun this anytime with: npm run setup'));
+  console.log('');
 }
 
 export function section(title) {
@@ -34,30 +42,24 @@ export function warn(msg) {
 }
 
 export function completionBanner(config) {
-  const { name, emoji, connections = [], command } = config;
+  const { name, emoji, connections = [] } = config;
 
-  const lines = [];
-  lines.push('');
-  lines.push(GREEN('┌─────────────────────────────────────────┐'));
-  lines.push(GREEN('│') + BOLD(`  ${emoji}  ${name} is ready!`) + ' '.repeat(Math.max(0, 38 - name.length - emoji.length - 4)) + GREEN('│'));
-  lines.push(GREEN('│') + ' '.repeat(41) + GREEN('│'));
+  console.log('');
+  console.log(GREEN('  Setup complete! 🎉'));
+  console.log('');
+  console.log(BOLD(`  Your assistant: ${name} ${emoji}`));
 
-  if (connections.length > 0) {
-    lines.push(GREEN('│') + '  Connections:' + ' '.repeat(27) + GREEN('│'));
-    for (const conn of connections) {
-      const line = `    • ${conn}`;
-      lines.push(GREEN('│') + line + ' '.repeat(Math.max(0, 41 - line.length)) + GREEN('│'));
-    }
-    lines.push(GREEN('│') + ' '.repeat(41) + GREEN('│'));
-  }
+  const connList = ['Telegram', ...connections];
+  console.log(`  Connections: ${connList.join(', ')}`);
 
-  if (command) {
-    const cmdLine = `  Run: ${command}`;
-    lines.push(GREEN('│') + CYAN(cmdLine) + ' '.repeat(Math.max(0, 41 - cmdLine.length)) + GREEN('│'));
-  }
-
-  lines.push(GREEN('└─────────────────────────────────────────┘'));
-  lines.push('');
-
-  console.log(lines.join('\n'));
+  console.log('');
+  console.log('  Start each day:');
+  console.log(DIM('    ~/Documents/my-assistant/start.sh'));
+  console.log('');
+  console.log('  Reconfigure anytime:');
+  console.log(DIM('    cd ~/Documents/my-assistant'));
+  console.log(DIM('    npm run setup'));
+  console.log('');
+  console.log(DIM('  Questions? Ask your assistant or Alex.'));
+  console.log('');
 }
