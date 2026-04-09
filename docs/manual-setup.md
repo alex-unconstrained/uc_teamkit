@@ -101,7 +101,7 @@ cd ~/Documents
 2. Clone the repository:
 
 ```
-git clone https://github.com/unconstrained-work/uc-teamkit.git my-assistant
+git clone https://github.com/alex-unconstrained/uc_teamkit.git my-assistant
 ```
 
 3. Open the folder:

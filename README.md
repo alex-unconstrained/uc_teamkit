@@ -5,7 +5,7 @@
 Open Terminal and run:
 
 ```
-curl -fsSL https://raw.githubusercontent.com/unconstrained-work/uc-teamkit/main/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/alex-unconstrained/uc_teamkit/main/bootstrap.sh | bash
 ```
 
 That's it. The setup wizard handles everything:

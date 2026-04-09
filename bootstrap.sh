@@ -75,7 +75,7 @@ if [ -d "$DEST" ]; then
   ok "Project directory exists at $DEST"
 else
   doing "Cloning project..."
-  git clone https://github.com/unconstrained-work/uc-teamkit.git "$DEST"
+  git clone https://github.com/alex-unconstrained/uc_teamkit.git "$DEST"
   ok "Project cloned to $DEST"
 fi
 
