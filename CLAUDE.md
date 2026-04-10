@@ -81,7 +81,7 @@ curl -s -H "X-API-KEY: YOUR_KEY" "https://public-api.gamma.app/v1.0/generations/
 "imageOptions": {
   "source": "ai",
   "aiParams": {
-    "model": "flux_1_1_pro",
+    "model": "auto",
     "imagePromptSuffix": "figurative illustrated, atey ghilain, storybook illustration, colors are greys oranges and blacks"
   }
 }
