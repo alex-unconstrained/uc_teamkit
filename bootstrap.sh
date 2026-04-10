@@ -57,8 +57,14 @@ if command -v claude &>/dev/null; then
   ok "Claude Code CLI found"
 else
   doing "Installing Claude Code CLI..."
-  npm install -g @anthropic-ai/claude-code 2>/dev/null || sudo npm install -g @anthropic-ai/claude-code
-  ok "Claude Code CLI installed"
+  if npm install -g @anthropic-ai/claude-code 2>/dev/null; then
+    ok "Claude Code CLI installed (global)"
+  else
+    echo -e "${DIM}  Global install needs admin rights. Installing locally instead...${NC}"
+    # Will install as local dep after clone — npx handles the rest
+    CLAUDE_LOCAL=true
+    ok "Will use local Claude Code (no admin needed)"
+  fi
 fi
 
 # Git
@@ -83,13 +89,22 @@ fi
 doing "Installing dependencies..."
 cd "$DEST"
 npm install --silent
+if [ "$CLAUDE_LOCAL" = "true" ]; then
+  doing "Installing Claude Code locally..."
+  npm install @anthropic-ai/claude-code --silent
+  ok "Claude Code installed locally (use npx claude to run)"
+fi
 ok "Dependencies installed"
 
 # Claude Code auth
 echo ""
 doing "Checking Claude Code authentication..."
 echo -e "${DIM}If you haven't logged in yet, you'll be prompted now.${NC}"
-claude auth login 2>/dev/null || true
+if command -v claude &>/dev/null; then
+  claude auth login 2>/dev/null || true
+else
+  npx @anthropic-ai/claude-code auth login 2>/dev/null || true
+fi
 
 # Launch setup
 echo ""

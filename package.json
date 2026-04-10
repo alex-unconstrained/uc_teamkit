@@ -5,7 +5,7 @@
   "scripts": {
     "setup": "node src/setup.js",
     "dashboard": "node src/dashboard.js",
-    "start": "claude --channels plugin:telegram@claude-plugins-official"
+    "start": "npx @anthropic-ai/claude-code --channels plugin:telegram@claude-plugins-official"
   },
   "dependencies": {
     "chalk": "^5.4.0",
