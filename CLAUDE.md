@@ -51,6 +51,47 @@ This opens a local web page (localhost:3456) where they can view and edit all se
 
 You can also run `npm run setup` to redo the full setup wizard from scratch.
 
+## Gamma Presentations
+
+If your user asks you to create a presentation, slide deck, or pitch deck, use the Gamma API.
+
+**Setup:** The API key must be in `.env` file in the project root as `GAMMA_API_KEY=sk-gamma-xxxxx`. If the file doesn't exist, ask the user to create it or contact Alex for the team key.
+
+**To create a presentation:**
+
+1. Read the API key: `cat .env | grep GAMMA_API_KEY | cut -d'=' -f2`
+
+2. Generate with curl:
+```bash
+curl -s -X POST "https://public-api.gamma.app/v1.0/generations" \
+  -H "X-API-KEY: YOUR_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"inputText": "YOUR OUTLINE OR CONTENT", "textMode": "generate", "format": "presentation", "numCards": 8}'
+```
+
+3. This returns a `generationId`. Poll every 10 seconds until status is "completed":
+```bash
+curl -s -H "X-API-KEY: YOUR_KEY" "https://public-api.gamma.app/v1.0/generations/GENERATION_ID"
+```
+
+4. When completed, share the `gammaUrl` with the user — they can view, edit, and export from there.
+
+**Tips:**
+- `textMode`: "generate" (AI expands your outline), "condense" (AI shortens), "preserve" (keeps your text as-is)
+- `format`: "presentation", "document", "webpage"
+- `numCards`: number of slides (default 8-10 for presentations)
+- Help the user write a good outline first, then send it to Gamma. Better input = better output.
+
+## Pulling Updates
+
+If the user runs `git pull` and gets merge conflicts on my-identity.md or my-soul.md, help them resolve it:
+```bash
+git stash
+git pull
+git stash pop
+```
+Their personality files are safe — git stash preserves their changes.
+
 ## Memory
 
 Save important things about your user to your memory system. Build up context over time so you get better at helping them specifically. Things worth remembering:
