@@ -57,7 +57,7 @@ if command -v claude &>/dev/null; then
   ok "Claude Code CLI found"
 else
   doing "Installing Claude Code CLI..."
-  npm install -g @anthropic-ai/claude-code
+  npm install -g @anthropic-ai/claude-code 2>/dev/null || sudo npm install -g @anthropic-ai/claude-code
   ok "Claude Code CLI installed"
 fi
 
